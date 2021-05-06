@@ -30,10 +30,16 @@ def add_material():
     return item.to_dict()
 
 
-@mat_routes('/<int:id>', methods=['PATCH'])
+@mat_routes.route('/<int:id>', methods=['PATCH'])
 @login_required
 def edit_item(id):
     item = Material.query.get(id)
     edited_item = Material()
     #create an Edit Item Form
     #form.validate_on_submit...
+
+@mat_routes.route('/<int:id>', methods=['DELETE'])
+def delete_item(id):
+    del_item = Material.query.filter(Material.id == id).delete()
+    db.session.commit()
+    return jsonify('Item deleted.' if del_item else 'Could not delete')
