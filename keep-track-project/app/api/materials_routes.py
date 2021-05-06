@@ -14,3 +14,26 @@ def get_materials():
     return {'materials' : materials}
 
 @mat_routes('/', methods=['POST'])
+@login_required
+def add_material():
+    item_name = request.json['name']
+    quantity = request.json['quantity']
+    measure_unit = request.json['measure_unit']
+    item = Material(
+        name=item_name,
+        quantity=quantity,
+        measure_unit=measure_unit
+    )
+    db.session.add(item)
+    db.session.commit(item)
+
+    return item.to_dict()
+
+
+@mat_routes('/<int:id>', methods=['PATCH'])
+@login_required
+def edit_item(id):
+    item = Material.query.get(id)
+    edited_item = Material()
+    #create an Edit Item Form
+    #form.validate_on_submit...
