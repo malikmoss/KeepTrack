@@ -10,7 +10,7 @@ mat_routes = Blueprint('materials', __name__)
 @login_required
 def get_materials():
     userId = int(current_user.id)
-    userMaterials = Material.query.filter(Material.user_id == user_id).all()
+    materials = Material.query.filter(Material.user_id == user_id).all()
     # materials = [material.to_dict() for material in raw_materials]
     return {'materials' : materials}
 
@@ -20,16 +20,14 @@ def add_material():
     item_name = request.json['name']
     quantity = request.json['quantity']
     measure_unit = request.json['measure_unit']
-    item = Material(
-        name=item_name,
-        quantity=quantity,
-        measure_unit=measure_unit,
-        description=descritption
-    )
-    db.session.add(item)
-    db.session.commit(item)
-
-    return item.to_dict()
+    form = MaterialForm()
+    if form.validate_on_submit():
+        if form.validate_on_submit():
+            item = MaterialForm()
+            db.session.add(item)
+            db.session.commit()
+            return item.to_dict()
+    return jsonify('Failed to add new item. Please review input')
 
 
 @mat_routes.route('/<int:id>', methods=['PATCH'])
@@ -40,11 +38,9 @@ def edit_item(id):
     #create an Edit Item Form
     form = MaterialForm()
     if form.validate_on_submit():
-        data = MaterialForm()
-        db.session.add(data)
+        form.populate_obj(edited_item)
+        item = edited_item
         db.session.commit()
-        return data.to_dict()
-    return jsonify('Failed to add new item. Please review input')
 
 @mat_routes.route('/<int:id>', methods=['DELETE'])
 def delete_item(id):
