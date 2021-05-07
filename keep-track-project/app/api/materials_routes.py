@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.models import db, Material, Note, ProductMaterial, Product, User
+from app.forms import MaterialForm
 from flask_login import current_user, login_required
 
 mat_routes = Blueprint('materials', __name__)
@@ -22,7 +23,8 @@ def add_material():
     item = Material(
         name=item_name,
         quantity=quantity,
-        measure_unit=measure_unit
+        measure_unit=measure_unit,
+        description=descritption
     )
     db.session.add(item)
     db.session.commit(item)
@@ -36,7 +38,13 @@ def edit_item(id):
     item = Material.query.get(id)
     edited_item = Material()
     #create an Edit Item Form
-    #form.validate_on_submit...
+    form = MaterialForm()
+    if form.validate_on_submit():
+        data = MaterialForm()
+        db.session.add(data)
+        db.session.commit()
+        return data.to_dict()
+    return jsonify('Failed to add new item. Please review input')
 
 @mat_routes.route('/<int:id>', methods=['DELETE'])
 def delete_item(id):
