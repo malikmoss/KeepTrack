@@ -5,8 +5,9 @@ class Product(db.Model):
     __tablename__ = 'products'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), nullable=False, unique=True)
     quantity = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.String(100), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow,
                            nullable=False)
@@ -17,6 +18,7 @@ class Product(db.Model):
         return {
             'id': self.id,
             'name': self.name,
+            'description': self.description,
             'user_id': self.user_id,
             'created_at': self.created_at,
             'updated_at': self.updated_at
