@@ -1,6 +1,11 @@
 from flask import Blueprint, jsonify, request
-from app.models import db, Material, Note, ProductMaterial, Product, User
-from app.forms import MaterialForm
+from ..models import db
+from ..models.material import Material
+from ..models.note import Note
+from ..models.product_material import ProductMaterial
+from ..models.product import Product
+from ..models.user import User
+from ..forms import MaterialForm
 from flask_login import current_user, login_required
 
 mat_routes = Blueprint('materials', __name__)
@@ -13,6 +18,14 @@ def get_materials():
     materials = Material.query.filter(Material.user_id == user_id).all()
     # materials = [material.to_dict() for material in raw_materials]
     return {'materials' : materials}
+
+@mat_routes.route('/<int:id>', methods=['GET'])
+# @login_required
+def get_material(id):
+    userId = int(current_user.id)
+    material = Material.query.get(id)
+    # materials = [material.to_dict() for material in raw_materials]
+    return {'material' : material}
 
 @mat_routes('/', methods=['POST'])
 @login_required

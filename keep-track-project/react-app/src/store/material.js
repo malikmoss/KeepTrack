@@ -13,34 +13,33 @@ export const addMaterialAction = (material) => ({
     payload: material
 })
 
-export const editMaterialAction = (materialId, data) => ({
+export const editMaterialAction = (materialId) => ({
     type: EDIT_MATERIAL,
     payload: materialId,
-    data
 })
 
 export const deleteMaterialItem = (materialId) => ({
     type: DELETE_MATERIAL,
-    materialId
+    payload: materialId
 })
 
 export const getMaterials = (materialId) => async (dispatch) => {
     const response = await fetch(`/api/materials/${materialId}`)
 
-    materials = await response.json()
+    const materials = await response.json()
     if (materials.errors) {
         return;
     }
-    dispactch(getMaterialsAction(materials.materials))
+    dispatch(getMaterialsAction(materials.materials))
 }
 
-export const addMaterial = (name) => async (dispatch) => {
-    const response = await fetch(`/api/servers/${serverId}/channels/${channelId}`, {
+export const addMaterial = (materialId) => async (dispatch) => {
+    const response = await fetch(`/api/materials/${materialId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        name: JSON.stringify({ name })
+        name: JSON.stringify({ materialId })
     })
 
     const material = await response.json();   // message.message or w/e the key is
@@ -50,13 +49,13 @@ export const addMaterial = (name) => async (dispatch) => {
     dispatch(addMaterialAction(material))
 }
 
-export const editMaterial = (name) => async (dispatch) => {
+export const editMaterial = (materialId) => async (dispatch) => {
     const response = await fetch(`/api/${materialId}`, {
     method: 'PUT',
     headers: {
         'Content-Type': 'application/json'
     },
-    name: JSON.stringify({ name })
+    name: JSON.stringify({ materialId })
     })
 
     const material = await response.json();
@@ -66,5 +65,33 @@ export const editMaterial = (name) => async (dispatch) => {
     dispatch(editMaterialAction(material))
 }
 
-const initialState = {  }
+const flatMaterials = (materials) => {
+    const fMaterial = {}
+    materials.forEach(server => {
+        fMaterial[materials.id] = materials
+    })
+    return fMaterial
+}
 
+const initialState = { materials:null, materials: null  }
+
+const MaterialsReducer = (state = initialState, action) => {
+    let newState;
+    switch (action.type) {
+        case GET_ALL_MATERIALS:
+            // creates new copy of state and assigning it to the object
+            newState.Object.assign({}, state)
+            newState.material = action.payload
+        case ADD_MATERIAL:
+            newState.Object.assign({}, state)
+            newState.material = action.payload
+        case EDIT_MATERIAL:
+            newState.Object.assign({}, state)
+            newState.material = action.payload
+        case DELETE_MATERIAL:
+            newState.Object.assign({}, state)
+            newState.material = action.payload
+        default:
+            return state
+    }
+}
