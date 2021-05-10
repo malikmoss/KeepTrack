@@ -65,15 +65,15 @@ export const editProduct = (productId) => async (dispatch) => {
     dispatch(editProductAction(product))
 }
 
-const flatProducts = (products) => {
-    const fProduct = {}
-    products.forEach(product => {
-        fProduct[products.id] = products
-    })
-    return fProduct
-}
+// const flatProducts = (products) => {
+//     const fProduct = {}
+//     products.forEach(product => {
+//         fProduct[products.id] = product
+//     })
+//     return fProduct
+// }
 
-const initialState = { materials:null, materials: null  }
+const initialState = { products:null, products:null  }
 
 const ProductsReducer = (state = initialState, action) => {
     let newState;

@@ -65,15 +65,15 @@ export const editMaterial = (materialId) => async (dispatch) => {
     dispatch(editMaterialAction(material))
 }
 
-const flatMaterials = (materials) => {
-    const fMaterial = {}
-    materials.forEach(material => {
-        fMaterial[materials.id] = materials
-    })
-    return fMaterial
-}
+// const flatMaterials = (materials) => {
+//     const fMaterial = {}
+//     materials.forEach(material => {
+//         fMaterial[materials.id] = material
+//     })
+//     return fMaterial
+// }
 
-const initialState = { materials:null, materials: null  }
+const initialState = { materials:null, materials:null  }
 
 const MaterialsReducer = (state = initialState, action) => {
     let newState;

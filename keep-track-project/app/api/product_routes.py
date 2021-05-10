@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from app.models import db
 from ..models import db
 from ..models.material import Material
+from ..models.product import Product
 from ..models.note import Note
 from ..models.product_material import ProductMaterial
 from ..models.user import User
@@ -14,12 +15,12 @@ prod_routes = Blueprint('products', __name__)
 @login_required
 def all_products():
     userId = int(current_user.id)
-    products = Product.query.filter(Product.user_id == user.id).all()
-    return {'products': products}
+    products = Product.query.filter(Product.user_id == userId).all()
+    return {'products': [product.to_dict() for product in products]}
 
-@prod_routes.route('/')
+@prod_routes.route('/<int:id>', methods=['GET'])
 # @login_required
-def get_product():
+def get_product(id):
     # userId = int(current_user.id)
     product = Product.query.get(id)
     return {'product' : product}

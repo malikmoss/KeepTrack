@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtfforms import StringField, IntegerField, SubmitField
-from wtforms.validators import DataRequired, IntegerField
+from wtforms import StringField, IntegerField, SubmitField
+from wtforms.validators import DataRequired
 
 class MaterialForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])

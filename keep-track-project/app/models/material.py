@@ -15,11 +15,11 @@ class Material(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,
                            onupdate=datetime.utcnow, nullable=False)
 
-def to_dict(self):
+    def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
-            'quantity': self.mesaure_unit,
+            'quantity': self.measure_unit,
             'description': self.description,
             'user_id': self.user_id,
             'created_at': self.created_at,

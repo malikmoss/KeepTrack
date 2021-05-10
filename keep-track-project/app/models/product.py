@@ -18,6 +18,7 @@ class Product(db.Model):
         return {
             'id': self.id,
             'name': self.name,
+            'quantity': self.quantity,
             'description': self.description,
             'user_id': self.user_id,
             'created_at': self.created_at,
