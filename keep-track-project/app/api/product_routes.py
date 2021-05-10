@@ -1,5 +1,11 @@
 from flask import Blueprint, jsonify, request
-from app.models import db, Material, Note, ProductMaterial, Product, User
+from app.models import db
+from ..models import db
+from ..models.material import Material
+from ..models.note import Note
+from ..models.product_material import ProductMaterial
+from ..models.user import User
+from ..forms.newProduct_form import ProductForm
 from flask_login import current_user, login_required
 
 prod_routes = Blueprint('products', __name__)
@@ -7,22 +13,31 @@ prod_routes = Blueprint('products', __name__)
 @prod_routes.route('/')
 @login_required
 def all_products():
+    userId = int(current_user.id)
     products = Product.query.filter(Product.user_id == user.id).all()
-    return jsonify(products.to_dict() for product in products)
+    return {'products': products}
+
+@prod_routes.route('/')
+# @login_required
+def get_product():
+    # userId = int(current_user.id)
+    product = Product.query.get(id)
+    return {'product' : product}
 
 @prod_routes.route('/', methods=['POST'])
 @login_required
 def add_product():
-    prod_name = request.json['name']
+    product_name = request.json['name']
     quantity = request.json['quantity']
-    product = Product (
-        name=item_name,
-        quantity=quantity,
-    )
-    db.session.add(product)
-    db.session.commit(product)
-
-    return product.to_dict()
+    description = request.json['description']
+    form = ProductForm()
+    if form.validate_on_submit():
+        if form.validate_on_submit():
+            product = ProductForm()
+            db.session.add(product)
+            db.session.commit()
+            return product.to_dict()
+    return jsonify('Failed to add new product. Please review input')
 
 #route to edit products: edit quantity, name...
 @prod_routes.route('/<int:id>', methods=['PATCH'])
@@ -30,8 +45,13 @@ def add_product():
 def edit_products(id):
     product = Product.query.get(id)
     edited_product = Product()
-    #create a Product item form
-    #form.validate_on_submit...
+    form = ProductForm()
+    if form.validate_on_submit():
+        form.populate_obj(edited_product)
+        product = edited_product
+        db.session.commit()
+        return product.to_dict()
+    return jsonify('Failed to edit product. Please review input')
 
 @prod_routes.route('/<int:id>', methods=['DELETE'])
 def delete_product(id):

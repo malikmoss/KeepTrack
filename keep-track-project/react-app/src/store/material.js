@@ -1,4 +1,4 @@
-const GET_ALL_MATERIALS = "material/GET_ALL_MATERIAL"
+const GET_ALL_MATERIALS = "material/GET_ALL_MATERIALS"
 const ADD_MATERIAL = "material/ADD_MATERIAL"
 const EDIT_MATERIAL = "material/EDIT_MATERIAL"
 const DELETE_MATERIAL = "material/DELETE_MATERIAL"
@@ -67,7 +67,7 @@ export const editMaterial = (materialId) => async (dispatch) => {
 
 const flatMaterials = (materials) => {
     const fMaterial = {}
-    materials.forEach(server => {
+    materials.forEach(material => {
         fMaterial[materials.id] = materials
     })
     return fMaterial

@@ -5,7 +5,8 @@ from ..models.note import Note
 from ..models.product_material import ProductMaterial
 from ..models.product import Product
 from ..models.user import User
-from ..forms import MaterialForm
+from ..forms.newMaterial_form import MaterialForm
+
 from flask_login import current_user, login_required
 
 mat_routes = Blueprint('materials', __name__)
@@ -24,6 +25,7 @@ def get_materials():
 def get_material(id):
     userId = int(current_user.id)
     material = Material.query.get(id)
+    print(material.to_dict())
     # materials = [material.to_dict() for material in raw_materials]
     return {'material' : material}
 
@@ -33,6 +35,7 @@ def add_material():
     item_name = request.json['name']
     quantity = request.json['quantity']
     measure_unit = request.json['measure_unit']
+    description = request.json['description']
     form = MaterialForm()
     if form.validate_on_submit():
         if form.validate_on_submit():
@@ -54,6 +57,8 @@ def edit_item(id):
         form.populate_obj(edited_item)
         item = edited_item
         db.session.commit()
+        return item.to_dict()
+    return jsonify ('Failed to edit item. Please review input.')
 
 @mat_routes.route('/<int:id>', methods=['DELETE'])
 def delete_item(id):
