@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models import db
+from ..models import db
 from ..models import db
 from ..models.material import Material
 from ..models.product import Product
@@ -12,7 +12,7 @@ from flask_login import current_user, login_required
 prod_routes = Blueprint('products', __name__)
 
 @prod_routes.route('/')
-@login_required
+# @login_required
 def all_products():
     userId = int(current_user.id)
     products = Product.query.filter(Product.user_id == userId).all()
@@ -23,10 +23,10 @@ def all_products():
 def get_product(id):
     # userId = int(current_user.id)
     product = Product.query.get(id)
-    return {'product' : product}
+    return product.to_dict()
 
 @prod_routes.route('/', methods=['POST'])
-@login_required
+# @login_required
 def add_product():
     product_name = request.json['name']
     quantity = request.json['quantity']
@@ -42,7 +42,7 @@ def add_product():
 
 #route to edit products: edit quantity, name...
 @prod_routes.route('/<int:id>', methods=['PATCH'])
-@login_required
+# @login_required
 def edit_products(id):
     product = Product.query.get(id)
     edited_product = Product()

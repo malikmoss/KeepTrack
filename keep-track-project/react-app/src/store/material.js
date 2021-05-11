@@ -1,4 +1,5 @@
 const GET_ALL_MATERIALS = "material/GET_ALL_MATERIALS"
+// const GET_MATERIAL = "material/GET_MATERIAL"
 const ADD_MATERIAL = "material/ADD_MATERIAL"
 const EDIT_MATERIAL = "material/EDIT_MATERIAL"
 const DELETE_MATERIAL = "material/DELETE_MATERIAL"
@@ -7,6 +8,11 @@ const getMaterialsAction = (materials) => ({
     type: GET_ALL_MATERIALS,
     payload: materials,
 });
+
+// export const getMaterialAction = (material) => ({
+//     type: GET_MATERIAL,
+//     payload: material,
+// });
 
 export const addMaterialAction = (material) => ({
     type: ADD_MATERIAL,
@@ -24,14 +30,25 @@ export const deleteMaterialItem = (materialId) => ({
 })
 
 export const getMaterials = (materialId) => async (dispatch) => {
-    const response = await fetch(`/api/materials/${materialId}`)
+    const response = await fetch(`/api/materials/${materialId}`);
 
     const materials = await response.json()
     if (materials.errors) {
         return;
     }
     dispatch(getMaterialsAction(materials.materials))
+    // return materials
 }
+
+// export const getMaterial = (materialId) => async (dispatch) => {
+//     const response = await fetch(`/api/materials/${materialId}`)
+
+//     const materials = await response.json()
+//     if (materials.errors) {
+//         return;
+//     }
+//     dispatch(getMaterialAction(materials.materials))
+// }
 
 export const addMaterial = (materialId) => async (dispatch) => {
     const response = await fetch(`/api/materials/${materialId}`, {
@@ -42,7 +59,7 @@ export const addMaterial = (materialId) => async (dispatch) => {
         name: JSON.stringify({ materialId })
     })
 
-    const material = await response.json();   // message.message or w/e the key is
+    const material = await response.json(); 
     if (material.errors) {
         return;
     }
@@ -82,6 +99,9 @@ const MaterialReducer = (state = initialState, action) => {
             // creates new copy of state and assigning it to the object
             newState.Object.assign({}, state)
             newState.material = action.payload
+        // case GET_MATERIAL:
+        //     newState.Object.assign({}, state)
+        //     newState.material = action.payload
         case ADD_MATERIAL:
             newState.Object.assign({}, state)
             newState.material = action.payload

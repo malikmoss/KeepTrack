@@ -1,12 +1,11 @@
 from flask import Blueprint, jsonify, request
-from app.models import db
-from app.models.material import Material
-from app.models.note import Note
-from app.models.product_material import ProductMaterial
-from app.models.product import Product
-from app.models.user import User
-from app.forms.newMaterial_form import MaterialForm
-
+from ..models import db
+from ..models.material import Material
+from ..models.note import Note
+from ..models.product_material import ProductMaterial
+from ..models.product import Product
+from ..models.user import User
+from ..forms.newMaterial_form import MaterialForm
 from flask_login import current_user, login_required
 
 mat_routes = Blueprint('materials', __name__)
