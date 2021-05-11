@@ -73,9 +73,9 @@ export const editMaterial = (materialId) => async (dispatch) => {
 //     return fMaterial
 // }
 
-const initialState = { materials:null, materials:null  }
+const initialState = { material:null, materials:null  }
 
-const MaterialsReducer = (state = initialState, action) => {
+const MaterialReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_ALL_MATERIALS:
@@ -95,3 +95,5 @@ const MaterialsReducer = (state = initialState, action) => {
             return state
     }
 }
+
+export default MaterialReducer;

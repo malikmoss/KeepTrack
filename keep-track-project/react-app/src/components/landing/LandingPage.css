@@ -1,0 +1,22 @@
+.landing-main-section {
+    position: relative;
+    background-color: #fbf7ed;
+    overflow: hidden;
+}
+
+.login-button {
+    font-size: 1.0625em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.0625em;
+    font-weight: 500;
+    font-family: ShopifySans, Helvetica, Arial, sans-serif;
+    transition-property: border-color, fill;
+    transition-duration: 300ms;
+}

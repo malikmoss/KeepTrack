@@ -6,19 +6,21 @@ import "./MaterialsPage.css"
 
 
 export default function Material() {
-    const dispatch = useDispatch();
-    const { materialId } = useParams();
-    const material = useSelector((state) => state.material.material)
+  const dispatch = useDispatch();
+  const { materialId } = useParams();
+  const materials = useSelector((state) => state.materials.materials)
+    // const materials = useSelector((state) => Object.values(state.materials.materials))
 
-    useEffect(() => {
-        dispatch(getMaterials(materialId))
-    }, [materialId, dispatch])
 
-    return (
-        <div>
-            <div>
-                <h1>Materials</h1>
-            </div>
-        </div>
-    )
+  useEffect(() => {
+      dispatch(getMaterials(materialId))
+  }, [materialId, dispatch])  
+  return (
+      <div>
+          <p>Materials Page</p>
+          {/* {materials?.map((material, index) => (
+              {material}
+          ))} */}
+      </div>
+  )
 }
