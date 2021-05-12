@@ -13,14 +13,15 @@ export default function Material() {
 
 
   useEffect(() => {
-      dispatch(getMaterials(materialId))
-  }, [materialId, dispatch])  
+      dispatch(getMaterials())
+  }, [dispatch])  
+
   return (
       <div>
-          <p>Materials Page</p>
-          {/* {materials?.map((material, index) => (
-              {material}
-          ))} */}
+          <h1>Materials Page</h1>
+          {materials?.map((material, index) => (
+              <li>{material.name}</li>
+          ))}
       </div>
   )
 }

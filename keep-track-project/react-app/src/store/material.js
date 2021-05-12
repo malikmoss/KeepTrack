@@ -1,18 +1,18 @@
 const GET_ALL_MATERIALS = "material/GET_ALL_MATERIALS"
-// const GET_MATERIAL = "material/GET_MATERIAL"
+const GET_MATERIAL = "material/GET_MATERIAL"
 const ADD_MATERIAL = "material/ADD_MATERIAL"
 const EDIT_MATERIAL = "material/EDIT_MATERIAL"
 const DELETE_MATERIAL = "material/DELETE_MATERIAL"
 
-const getMaterialsAction = (materials) => ({
+export const getMaterialsAction = (materials) => ({
     type: GET_ALL_MATERIALS,
     payload: materials,
 });
 
-// export const getMaterialAction = (material) => ({
-//     type: GET_MATERIAL,
-//     payload: material,
-// });
+export const getMaterialAction = (material) => ({
+    type: GET_MATERIAL,
+    payload: material,
+});
 
 export const addMaterialAction = (material) => ({
     type: ADD_MATERIAL,
@@ -29,8 +29,8 @@ export const deleteMaterialItem = (materialId) => ({
     payload: materialId
 })
 
-export const getMaterials = (materialId) => async (dispatch) => {
-    const response = await fetch(`/api/materials/${materialId}`);
+export const getMaterials = () => async (dispatch) => {
+    const response = await fetch(`/api/materials/`);
 
     const materials = await response.json()
     if (materials.errors) {
@@ -40,15 +40,15 @@ export const getMaterials = (materialId) => async (dispatch) => {
     // return materials
 }
 
-// export const getMaterial = (materialId) => async (dispatch) => {
-//     const response = await fetch(`/api/materials/${materialId}`)
+export const getMaterial = (materialId) => async (dispatch) => {
+    const response = await fetch(`/api/materials/${materialId}`)
 
-//     const materials = await response.json()
-//     if (materials.errors) {
-//         return;
-//     }
-//     dispatch(getMaterialAction(materials.materials))
-// }
+    const materials = await response.json()
+    if (materials.errors) {
+        return;
+    }
+    dispatch(getMaterialAction(materials.materials))
+}
 
 export const addMaterial = (materialId) => async (dispatch) => {
     const response = await fetch(`/api/materials/${materialId}`, {
@@ -97,20 +97,25 @@ const MaterialReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALL_MATERIALS:
             // creates new copy of state and assigning it to the object
-            newState.Object.assign({}, state)
+            newState = Object.assign({}, state)
+            newState.materials = action.payload
+            return newState
+        case GET_MATERIAL:
+            newState = Object.assign({}, state)
             newState.material = action.payload
-        // case GET_MATERIAL:
-        //     newState.Object.assign({}, state)
-        //     newState.material = action.payload
+            return newState
         case ADD_MATERIAL:
-            newState.Object.assign({}, state)
+            newState = Object.assign({}, state)
             newState.material = action.payload
+            return newState
         case EDIT_MATERIAL:
-            newState.Object.assign({}, state)
+            newState = Object.assign({}, state)
             newState.material = action.payload
+            return newState
         case DELETE_MATERIAL:
-            newState.Object.assign({}, state)
+            newState = Object.assign({}, state)
             newState.material = action.payload
+            return newState
         default:
             return state
     }

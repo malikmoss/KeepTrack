@@ -5,6 +5,7 @@ import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 // import NavBar from "./components/navbar/NavBar";
 import Material from "./components/materials/index"
+import Product from "./components/products/index"
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
@@ -49,8 +50,11 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <User />
         </ProtectedRoute>
-        <Route path="/materials/:materialId" exact={true}>
+        <Route path="/materials" exact={true}>
           <Material />
+        </Route>
+        <Route path="/products" exact={true}>
+          <Product />
         </Route>
       </Switch>
     </BrowserRouter>
