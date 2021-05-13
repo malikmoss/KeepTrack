@@ -6,6 +6,7 @@ import SignUpForm from "./components/auth/SignUpForm";
 // import NavBar from "./components/navbar/NavBar";
 import Material from "./components/materials/index"
 import Product from "./components/products/index"
+import AllItems from "./components/home/index"
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
@@ -55,6 +56,9 @@ function App() {
         </Route>
         <Route path="/products" exact={true}>
           <Product />
+        </Route>
+        <Route path="/inventory" exact={true}>
+          <AllItems />
         </Route>
       </Switch>
     </BrowserRouter>
