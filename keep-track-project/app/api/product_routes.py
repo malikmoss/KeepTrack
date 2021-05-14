@@ -4,7 +4,7 @@ from ..models import db
 from ..models.material import Material
 from ..models.product import Product
 from ..models.note import Note
-from ..models.product_material import ProductMaterial
+# from ..models.product_material import ProductMaterial
 from ..models.user import User
 from ..forms.newProduct_form import ProductForm
 from flask_login import current_user, login_required
@@ -23,6 +23,10 @@ def all_products():
 def get_product(id):
     # userId = int(current_user.id)
     product = Product.query.get(id)
+    newMaterial = Material.query.get(37)
+    product.materials.append(newMaterial)
+    db.session.commit()
+    product.materials = list(filter(lambda m: m.id != 6, product.materials))
     return product.to_dict()
 
 @prod_routes.route('/', methods=['POST'])

@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from ..models import db
 from ..models.material import Material
 from ..models.note import Note
-from ..models.product_material import ProductMaterial
+# from ..models.product_material import ProductMaterial
 from ..models.product import Product
 from ..models.user import User
 from ..forms.newMaterial_form import MaterialForm

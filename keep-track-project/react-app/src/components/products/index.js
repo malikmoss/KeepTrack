@@ -18,7 +18,12 @@ export default function Product() {
         <div>
             <h1>Products Page</h1>
             {products?.map((product, index) => (
+                <>
                 <li>{product.name}</li>
+                <ul>{product.materials.map(material => (
+                    <li>{material.name}</li>
+                ))}</ul>
+                </>
              ))} 
         </div>
     )

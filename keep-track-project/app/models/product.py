@@ -1,4 +1,5 @@
 from .db import db
+from app.models import product_materials
 from datetime import datetime
 
 class Product(db.Model):
@@ -13,6 +14,7 @@ class Product(db.Model):
                            nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,
                            onupdate=datetime.utcnow, nullable=False)
+    materials = db.relationship("Material", secondary=product_materials)
 
     def to_dict(self):
         return {
@@ -20,6 +22,7 @@ class Product(db.Model):
             'name': self.name,
             'quantity': self.quantity,
             'description': self.description,
+            'materials': [material.to_dict() for material in self.materials],
             'user_id': self.user_id,
             'created_at': self.created_at,
             'updated_at': self.updated_at
