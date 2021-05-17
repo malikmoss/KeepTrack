@@ -24,7 +24,7 @@ export const editMaterialAction = (materialId) => ({
     payload: materialId,
 })
 
-export const deleteMaterialItem = (materialId) => ({
+export const deleteMaterialAction = (materialId) => ({
     type: DELETE_MATERIAL,
     payload: materialId
 })
@@ -49,14 +49,14 @@ export const getMaterial = (materialId) => async (dispatch) => {
     }
     dispatch(getMaterialAction(materials.materials))
 }
-
-export const addMaterial = (materialId) => async (dispatch) => {
-    const response = await fetch(`/api/materials/${materialId}`, {
+// edit
+export const addMaterial = (data) => async (dispatch) => {
+    const response = await fetch(`/api/materials/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        name: JSON.stringify({ materialId })
+        body: JSON.stringify(data)
     })
 
     const material = await response.json(); 
@@ -82,6 +82,18 @@ export const editMaterial = (materialId) => async (dispatch) => {
     dispatch(editMaterialAction(material))
 }
 
+
+export const deleteMaterial = (materialId) => async (dispatch) => {
+    const response = await fetch(`/api/materials/${materialId}`, {
+    method: 'DELETE'
+    });
+    const material = await response.json();
+    if (material.errors) {
+        return;
+    }
+    dispatch(deleteMaterialAction(materialId))
+}
+
 // const flatMaterials = (materials) => {
 //     const fMaterial = {}
 //     materials.forEach(material => {
@@ -90,7 +102,7 @@ export const editMaterial = (materialId) => async (dispatch) => {
 //     return fMaterial
 // }
 
-const initialState = { material:null, materials:null  }
+const initialState = { material:null, materials:[]  }
 
 const MaterialReducer = (state = initialState, action) => {
     let newState;
@@ -115,6 +127,7 @@ const MaterialReducer = (state = initialState, action) => {
         case DELETE_MATERIAL:
             newState = Object.assign({}, state)
             newState.material = action.payload
+            newState.materials= newState.materials.filter(material=>material.id !== action.payload )
             return newState
         default:
             return state

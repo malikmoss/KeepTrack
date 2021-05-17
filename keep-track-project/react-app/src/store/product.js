@@ -24,7 +24,7 @@ export const editProductAction = (productId) => ({
     payload: productId,
 })
 
-export const deleteProductItem = (productId) => ({
+export const deleteProductAction = (productId) => ({
     type: DELETE_PRODUCT,
     payload: productId
 })
@@ -37,6 +37,8 @@ export const getProducts = () => async (dispatch) => {
         return;
     }
     dispatch(getProductsAction(products.products))
+    console.log(products)
+    return products.products
 }
 
 export const getProduct = (productId) => async (dispatch) => {
@@ -48,14 +50,14 @@ export const getProduct = (productId) => async (dispatch) => {
     }
     dispatch(getProductAction(products.products))
 }
-
-export const addProduct = (productId) => async (dispatch) => {
-    const response = await fetch(`/api/products/${productId}`, {
+// edit
+export const addProduct = (data) => async (dispatch) => {
+    const response = await fetch(`/api/products/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        name: JSON.stringify({ productId })
+        body: JSON.stringify(data)
     })
 
     const product = await response.json();   // message.message or w/e the key is
@@ -89,7 +91,19 @@ export const editProduct = (productId) => async (dispatch) => {
 //     return fProduct
 // }
 
-const initialState = { product:null, products:null  }
+//delete Product api
+export const deleteProduct = (productId) => async (dispatch) => {
+    const response = await fetch(`/api/products/${productId}`, {
+        method: 'DELETE'
+    })
+        const product = await response.json();
+        if (product.errors) {
+            return;
+        }
+        dispatch(deleteProductAction(productId))
+}
+
+const initialState = { product:null, products:[]  }
 
 const ProductReducer = (state = initialState, action) => {
     let newState;
@@ -114,6 +128,7 @@ const ProductReducer = (state = initialState, action) => {
             return newState
         case DELETE_PRODUCT:
             newState = Object.assign({}, state)
+            newState.products= newState.products.filter(product=>product.id !== action.payload )
             newState.product = action.payload
             return newState
         default:

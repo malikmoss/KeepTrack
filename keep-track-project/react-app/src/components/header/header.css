@@ -1,0 +1,75 @@
+/*============================
+ HEADER
+==============================*/
+header {
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  border-bottom: 1px solid white;
+  top: 0;
+}
+
+header .logo {
+  font-family: "Monoton", cursive;
+  color: #ffffff;
+  font-size: 35px;
+  padding: 11px 0px;
+  text-align: center;
+}
+
+header a {
+  margin-left: 20px;
+}
+
+header .container {
+  display: flex;
+}
+
+header .container .left {
+  width: 370px;
+}
+
+header .container .right {
+  flex-grow: 1;
+  border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+}
+header .container .right .top,
+header .container .right .bottom {
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: right;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 10px 20px;
+}
+
+header .container .right .top {
+  color: #bdbdbd;
+  border-bottom: 1px solid #ffffff;
+}
+
+header .cart_link {
+  display: inline-block;
+  position: relative;
+}
+
+header .cart_link span {
+  position: absolute;
+  background: red;
+  top: 2px;
+  color: #ffff;
+  left: -8px;
+  border-radius: 50%;
+  padding: 0px 7px 2px 7px;
+  font-size: 12px;
+}
+header .log_out_link {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.bck_b_light {
+  background: #757575;
+}

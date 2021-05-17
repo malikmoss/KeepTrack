@@ -35,17 +35,25 @@ def get_material(id):
 @mat_routes.route('/', methods=['POST'])
 # @login_required
 def add_material():
-    item_name = request.json['name']
+    name = request.json['name']
     quantity = request.json['quantity']
     measure_unit = request.json['measure_unit']
     description = request.json['description']
+    user_id = request.json['userId']
+
+    material = Material(
+         user_id=user_id,
+         name=name,
+         quantity=quantity,
+         description=description,
+         measure_unit=measure_unit,
+    )
     form = MaterialForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        if form.validate_on_submit():
-            item = MaterialForm()
-            db.session.add(item)
+            db.session.add(material)
             db.session.commit()
-            return item.to_dict()
+            return material.to_dict()
     return jsonify('Failed to add new item. Please review input')
 
 

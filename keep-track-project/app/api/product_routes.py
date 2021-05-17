@@ -20,26 +20,36 @@ def all_products():
 
 @prod_routes.route('/<int:id>', methods=['GET'])
 # @login_required
-def get_product(id):
+def get_product(id, materialId):
     # userId = int(current_user.id)
     product = Product.query.get(id)
-    newMaterial = Material.query.get(37)
+    newMaterial = Material.query.get(materialId)
     product.materials.append(newMaterial)
     db.session.commit()
     product.materials = list(filter(lambda m: m.id != 6, product.materials))
     return product.to_dict()
 
 @prod_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def add_product():
-    product_name = request.json['name']
+    user_id = request.json['userId']
+    name = request.json['name']
     quantity = request.json['quantity']
-    description = request.json['description']
+    description = request.json['description']    
+    print(description)
+    product = Product(
+      user_id=user_id,
+      name=name,
+      quantity=quantity,
+      description=description
+    )
+    print(product)
     form = ProductForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        if form.validate_on_submit():
-            product = ProductForm()
             db.session.add(product)
+            # newMaterial = Material.query.get(materialId)
+            # product.materials.append(newMaterial)
             db.session.commit()
             return product.to_dict()
     return jsonify('Failed to add new product. Please review input')
@@ -60,6 +70,7 @@ def edit_products(id):
 
 @prod_routes.route('/<int:id>', methods=['DELETE'])
 def delete_product(id):
+    # edit
     del_prod = Product.query.filter(Product.id == id).delete()
     db.session.commit()
     return jsonify('Product Deleted.' if del_prod else 'Could not delete')

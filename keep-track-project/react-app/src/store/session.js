@@ -45,6 +45,9 @@ export const login = (email, password) => async (dispatch) => {
         return data;
     }
     dispatch(setUser(data));
+    localStorage.setItem("username",data.username)
+    localStorage.setItem("id",data.id)
+    localStorage.setItem("email",data.email)
     return {};
 }
 
@@ -73,6 +76,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(setUser(data));
+    return data
 }
 
 // reducer

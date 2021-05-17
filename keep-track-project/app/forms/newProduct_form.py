@@ -7,3 +7,4 @@ class ProductForm(FlaskForm):
     quantity = IntegerField('quantity', [DataRequired()])
     description = StringField('description')
     submit = SubmitField("Submit")
+    userId = SubmitField("userId")
