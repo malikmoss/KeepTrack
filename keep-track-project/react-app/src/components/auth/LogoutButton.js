@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { logout } from "../../store/session";
-import { useHistory } from 'react-router-dom'
+import React from "react";
+import { logout } from "../../services/auth";
 
-const LogoutButton = () => {
-  const dispatch = useDispatch();
-  const history = useHistory()
-  const [logoutTog, setLogoutTog] = useState(false);
-  useEffect(() => {
-    if (logoutTog) {
-      history.push('/register_login')
-    }
-    setLogoutTog(false)
-  }, [logoutTog])
+const LogoutButton = ({setAuthenticated}) => {
   const onLogout = async (e) => {
-    setLogoutTog(true)
-    await dispatch(logout());
+    await logout();
+    setAuthenticated(false);
   };
 
   return <button onClick={onLogout}>Logout</button>;

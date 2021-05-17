@@ -1,6 +1,5 @@
 import MyButton from "../utils/button";
 import Login from "./login";
-
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./register-login.css";
@@ -18,12 +17,9 @@ class RegisterLogin extends Component {
         <div className="container">
           <div className="register_login_container">
             <div className="left">
-              <h1>New Customers</h1>
+              <h1>New Account</h1>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.{" "}
+                Clicke the button below to creater your user account.{" "}
               </p>
               <MyButton
                 type="default"

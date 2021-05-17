@@ -38,14 +38,21 @@ class Header extends Component {
     ],
   };
 
-  logoutHandler = () => {};
+  logoutHandler = () => {
+
+    this.props.logout()
+    localStorage.removeItem("id")
+    localStorage.removeItem("username")
+    localStorage.removeItem("email")
+    this.props.history.push("/")
+  };
 
   defaultLink = (item, i) =>
     item.name === "Log out" ? (
       <div
         className="log_out_link"
         key={i}
-        onClick={() => this.props.logout()}
+        onClick={() => this.logoutHandler()}
       >
         {item.name}
       </div>
