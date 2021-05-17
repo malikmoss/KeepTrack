@@ -13,11 +13,11 @@ class Header extends Component {
         linkTo: "/",
         public: true,
       },
-      {
-        name: "shop",
-        linkTo: "/shop",
-        public: true,
-      },
+      // {
+      //   name: "shop",
+      //   linkTo: "/shop",
+      //   public: true,
+      // },
     ],
     user: [
       {
