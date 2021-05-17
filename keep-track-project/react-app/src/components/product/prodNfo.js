@@ -52,14 +52,7 @@ const ProdNfo = (props) => {
     <div>
       <h1>test product</h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam iaculis
-        pharetra iaculis. Phasellus vel augue non diam egestas consequat.
-        Praesent aliquet eu elit eget interdum. Morbi feugiat quis quam et
-        dignissim. Nunc vulputate dolor massa, vitae condimentum nisi rhoncus
-        vel. Nunc bibendum egestas nibh, ac tempor turpis fringilla at. Aliquam
-        ullamcorper non augue sit amet iaculis. Duis a mauris quis lorem rutrum
-        varius a vel ante. Interdum et malesuada fames ac ante ipsum primis in
-        faucibus.{" "}
+        test description.{" "}
       </p>
       {showProdTags({ shipping: true, available: true })}
       {showProdActions("detail")}
