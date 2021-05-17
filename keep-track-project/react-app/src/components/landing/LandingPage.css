@@ -20,3 +20,7 @@
   transition-property: border-color, fill;
   transition-duration: 300ms;
 }
+
+.landing-img {
+  position: absolute;
+}
