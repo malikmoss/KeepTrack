@@ -62,7 +62,6 @@ const AddProduct = (props) => {
     let formIsValid = isFormValid(productData, "edit product");
 
     if (formIsValid) {
-      console.log("formIsValid");
     }
   };
 

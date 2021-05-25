@@ -51,7 +51,6 @@ export const generateData = (formdata, formName) => {
   for (let key in formdata) {
     dataToSubmit[key] = formdata[key].value;
   }
-  console.log(dataToSubmit);
 
   return dataToSubmit;
 };

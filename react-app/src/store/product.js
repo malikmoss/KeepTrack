@@ -37,7 +37,6 @@ export const getProducts = () => async (dispatch) => {
         return;
     }
     dispatch(getProductsAction(products.products))
-    console.log(products)
     return products.products
 }
 
@@ -60,7 +59,7 @@ export const addProduct = (data) => async (dispatch) => {
         body: JSON.stringify(data)
     })
 
-    const product = await response.json();   // message.message or w/e the key is
+    const product = await response.json(); 
     if (product.errors) {
         return;
     }

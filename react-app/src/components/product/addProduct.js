@@ -90,9 +90,7 @@ const AddProduct = (props) => {
     let formIsValid = isFormValid(productData, "add product");
 
     if (formIsValid) {
-      console.log("formIsValid");
       props.addProduct({...dataToSubmit,userId:props.userId}).then(result=>{
-        console.log(result)
       })
 
     }

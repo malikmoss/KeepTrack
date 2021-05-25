@@ -84,9 +84,7 @@ const AddMaterial = (props) => {
     let formIsValid = isFormValid(materialData, "add material");
 
     if (formIsValid) {
-      console.log("formIsValid");
       props.addMaterial({...dataToSubmit,userId:props.userId}).then(result=>{
-        console.log(result)
       })
     }
   };

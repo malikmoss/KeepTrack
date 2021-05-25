@@ -60,7 +60,6 @@ class Login extends Component {
     let formIsValid = isFormValid(this.state.formdata, "login");
 
     if (formIsValid) {
-      console.log(dataToSubmit);
       const user = await this.props.login(dataToSubmit.email, dataToSubmit.password);
       if (!user.errors) {
         this.props.setAuthenticated(true);
@@ -70,6 +69,22 @@ class Login extends Component {
       }
     }
   };
+
+  // demoLogin = async (event) => {
+  //   event.preventDefault();
+  //   const data = await this.props.login('demo@ap.io', 'password');
+  //   if (data.errors) {
+  //     this.props.setAuthenticated(true);
+  //     this.props.history.push("/dashboard")
+  //   } else {
+  //     this.setState({ errors: data.errors });
+  //   }
+  //   // let servs = await dispatch(getServers());
+  //   // if (servs && servs.length > 0) {
+  //   //   return <Redirect to={`/servers/${servs[0].id}`} />
+  //   // }
+  //   return <Redirect to="/dashboard" />;
+  // };
 
   render() {
     return (
@@ -100,6 +115,8 @@ class Login extends Component {
             className="reset-btn"
             style={{ marginLeft: "10px" }}
             onClick={() => this.props.history.push("/reset_user")}
+            // onClick={(event) => this.demoLogin(event)}
+            //<button className="demo-button" type="submit" onClick={DemoLogin}>Demo User</button>
           >
             Forgot my password
           </button>

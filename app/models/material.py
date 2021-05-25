@@ -15,7 +15,7 @@ class Material(db.Model):
                            nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,
                            onupdate=datetime.utcnow, nullable=False)
-    products = db.relationship("Product", secondary=product_materials)
+    products = db.relationship("Product", secondary=product_materials, back_populates='materials')
 
     def to_dict(self):
         return {
