@@ -37,17 +37,18 @@ export const getProducts = () => async (dispatch) => {
         return;
     }
     dispatch(getProductsAction(products.products))
+    console.log(products)
     return products.products
 }
 
 export const getProduct = (productId) => async (dispatch) => {
+    
     const response = await fetch(`/api/products/${productId}`)
-
     const products = await response.json()
     if (products.errors) {
         return;
     }
-    dispatch(getProductAction(products.products))
+    dispatch(getProductAction(products))
 }
 // edit
 export const addProduct = (data) => async (dispatch) => {
@@ -59,20 +60,20 @@ export const addProduct = (data) => async (dispatch) => {
         body: JSON.stringify(data)
     })
 
-    const product = await response.json(); 
+    const product = await response.json();   // message.message or w/e the key is
     if (product.errors) {
         return;
     }
     dispatch(addProductAction(product))
 }
 
-export const editProduct = (productId) => async (dispatch) => {
-    const response = await fetch(`/api/${productId}`, {
+export const editProduct = (data) => async (dispatch) => {
+    const response = await fetch(`/api/products/${data.id}`, {
     method: 'PUT',
     headers: {
         'Content-Type': 'application/json'
     },
-    name: JSON.stringify({ productId })
+    body: JSON.stringify(data)
     })
 
     const product = await response.json();
@@ -81,14 +82,6 @@ export const editProduct = (productId) => async (dispatch) => {
     }
     dispatch(editProductAction(product))
 }
-
-// const flatProducts = (products) => {
-//     const fProduct = {}
-//     products.forEach(product => {
-//         fProduct[products.id] = product
-//     })
-//     return fProduct
-// }
 
 //delete Product api
 export const deleteProduct = (productId) => async (dispatch) => {

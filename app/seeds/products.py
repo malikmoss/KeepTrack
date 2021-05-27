@@ -12,10 +12,10 @@ def seed_products():
              Product(name = "Lavendar Musk Travel Tin", quantity = 20, description ="Lavendar Musk 3oz candle", user_id = 1),
              Product(name = "Eucalyptus & Lemon Travel Tin", quantity = 12, description ="EL 3oz candle", user_id = 1),
              Product(name = "Lavendar Musk 6oz Candle Tin", quantity = 17, description ="LM Statement candle", user_id = 1),
-           ]
+            ]
     for product in data:
         # refactor this in the future
-        product.materials = [Material.query.get(id) for id in range(1,11)]
+        product.materials = [Material.query.get(1)]
         db.session.add(product)
     db.session.commit()
 

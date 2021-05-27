@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserLayout from "../HOC/userLayout";
 import FormField from "../Form/formfield";
 import { update, generateData, isFormValid } from "../Form/formActions";
-
+import {useParams} from "react-router-dom";
 import "./index.css";
-
+import {getProduct, editProduct} from "../../store/product";
+import {useDispatch, connect} from "react-redux";
 const productdata = {
+
   id: {
     element: "input",
     value: "",
@@ -20,7 +22,7 @@ const productdata = {
     validation: {
       required: true,
     },
-    valid: false,
+    valid: true,
     touched: false,
     validationMessage: "",
     showlabel: true,
@@ -31,6 +33,7 @@ const productdata = {
     config: {
       label: "Product material",
       name: "material_input",
+      multiple: true,
       options: [
         { key: 1231, value: "materialtest" },
         { key: 2121, value: "materialtest2" },
@@ -45,9 +48,22 @@ const productdata = {
     showlabel: true,
   },
 };
-const AddProduct = (props) => {
+const EditProduct = (props) => {
+  let { id } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+   props.getProduct(id).then((product) => {})
+  }, [])
+  
   const [productData, setProductData] = useState(productdata);
-
+  if(props.product){
+    productData['id']['value'] = props.product.id
+    let options = [];
+    for (let i = 0; i < props.product.newmaterial.length; i++) {
+      options.push({key:props.product.newmaterial[i].id, value:props.product.newmaterial[i].name})
+    }
+    productData['material']['config']['options'] = options;
+  }
   const updateForm = (element) => {
     const newFormdata = update(element, productData, "edit product");
     setProductData({
@@ -60,8 +76,11 @@ const AddProduct = (props) => {
 
     let dataToSubmit = generateData(productData, "edit product");
     let formIsValid = isFormValid(productData, "edit product");
-
+    console.log(formIsValid)
     if (formIsValid) {
+      props.editProduct({...dataToSubmit,userId:props.userId}).then(result=>{
+      })
+      alert("Success!")
     }
   };
 
@@ -69,6 +88,7 @@ const AddProduct = (props) => {
     <UserLayout>
       <div className="addproduct-container">
         <h2>Edit Product</h2>
+        {props.product?
         <div className="form_block_two">
           <div className="block">
             <FormField
@@ -85,7 +105,7 @@ const AddProduct = (props) => {
               change={(element) => updateForm(element)}
             />
           </div>
-        </div>
+        </div>:""}
         <div>
           <button className="create-btn" onClick={(event) => submitForm(event)}>
             Edit PRODUCT
@@ -95,5 +115,14 @@ const AddProduct = (props) => {
     </UserLayout>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    product: state.products.product,
+  };
+};
 
-export default AddProduct;
+const actions = {
+  getProduct,editProduct
+};
+
+export default connect(mapStateToProps,actions)(EditProduct);

@@ -12,7 +12,7 @@ mat_routes = Blueprint('materials', __name__)
 
 #looking to retrieve all materials
 @mat_routes.route('/')
-# @login_required
+@login_required
 def get_materials():
     userId = int(current_user.id)
     materials = Material.query.filter(Material.user_id == userId).all()
@@ -24,7 +24,7 @@ def get_materials():
     # return test.to_dict()
 
 @mat_routes.route('/<int:id>', methods=['GET'])
-# @login_required
+@login_required
 def get_material(id):
     # userId = int(current_user.id)
     material = Material.query.get(id)
@@ -33,7 +33,7 @@ def get_material(id):
     return material.to_dict()
 
 @mat_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def add_material():
     name = request.json['name']
     quantity = request.json['quantity']
@@ -58,7 +58,7 @@ def add_material():
 
 
 @mat_routes.route('/<int:id>', methods=['PATCH'])
-# @login_required
+@login_required
 def edit_item(id):
     item = Material.query.get(id)
     edited_item = Material()

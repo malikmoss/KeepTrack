@@ -7,7 +7,7 @@ import "./register-login.css";
 class RegisterLogin extends Component {
   componentDidMount() {
     if (this.props.user.user) {
-      this.props.history.push("/dashboard");
+      this.props.history("/dashboard");
     }
   }
 

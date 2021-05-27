@@ -91,8 +91,8 @@ const AddProduct = (props) => {
 
     if (formIsValid) {
       props.addProduct({...dataToSubmit,userId:props.userId}).then(result=>{
-      })
-
+      });
+      alert("Success!")
     }
   };
 

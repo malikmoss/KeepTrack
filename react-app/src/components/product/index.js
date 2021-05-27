@@ -3,44 +3,51 @@ import UserLayout from "../HOC/userLayout";
 import { AiOutlineEdit as Edit } from "react-icons/ai";
 import { connect } from "react-redux";
 import {getProducts,deleteProduct} from "../../store/product"
-import { RiDeleteBin6Line as Delete } from "react-icons/ri";
+import { RiDeleteBin6Line as Delete, RiEdit2Line } from "react-icons/ri";
 import "./index.css";
+import {useHistory} from "react-router-dom";
 
 const Products = (props) => {
-
+  const history = useHistory();
 
 
 useEffect(()=>{
  props.getProducts().then(_=>{
-   
   })
 },[])
+const editProduct = (product_id) => {
+  if (product_id){
+    history.push("/edit-product/"+ product_id);
+  }
+}
   return (
     <UserLayout>
       <div className="products-container">
         <h2>Products</h2>
-
         <table>
+          <thead>
           <tr>
             <th>Name</th>
             <th>Quantity</th>
             <th>Action</th>
           </tr>
-<tbody  >
-{
-props.products.length  && props.products.map(product=>(
+          </thead>
+          <tbody  >
+          {
+          props.products.length  && props.products.map(product=>(
 
-  <tr key={product.name}>
-  <td>{product.name}</td>
-  <td>{product.quantity}</td>
-  <td>
-    <Delete onClick={()=>props.deleteProduct(product.id)} size="25px" />
-    {/* <Edit size="25px" /> */}
-  </td>
-</tr>
-))
-}
-</tbody>
+            <tr key={product.name}>
+            <td>{product.name}</td>
+            <td>{product.quantity}</td>
+            <td style={{align:'center'}}>
+              <Delete onClick={()=>props.deleteProduct(product.id)} size="25px" />
+              {/* <Edit size="25px" /> */}
+              <RiEdit2Line onClick={()=>editProduct(product.id)} size="25px" style={{marginLeft:10}}/>
+            </td>
+          </tr>
+          ))
+          }
+          </tbody>
          
         </table>
       </div>

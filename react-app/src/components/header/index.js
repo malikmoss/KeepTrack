@@ -22,7 +22,7 @@ class Header extends Component {
     user: [
       {
         name: "My Account",
-        linkTo: "/user/dashboard",
+        linkTo: "/dashboard",
         public: false,
       },
       {
