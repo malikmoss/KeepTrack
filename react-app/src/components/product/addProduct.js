@@ -3,8 +3,9 @@ import UserLayout from "../HOC/userLayout";
 import FormField from "../Form/formfield";
 import { update, generateData, isFormValid } from "../Form/formActions";
 import { connect } from "react-redux";
-import {addProduct} from "../../store/product"
+import { addProduct } from "../../store/product";
 import "./index.css";
+import { useHistory } from "react-router-dom"
 
 const productdata = {
   name: {
@@ -75,6 +76,8 @@ const productdata = {
 };
 const AddProduct = (props) => {
   const [productData, setProductData] = useState(productdata);
+  const [actionSuccess, setActionSuccess] = useState(false);
+  const history = useHistory()
 
   const updateForm = (element) => {
     const newFormdata = update(element, productData, "add product");
@@ -90,9 +93,14 @@ const AddProduct = (props) => {
     let formIsValid = isFormValid(productData, "add product");
 
     if (formIsValid) {
-      props.addProduct({...dataToSubmit,userId:props.userId}).then(result=>{
-      });
-      alert("Success!")
+      props
+        .addProduct({ ...dataToSubmit, userId: props.userId })
+        .then((result) => {
+          setActionSuccess(true);
+          setTimeout(()=>{
+            history.push("/products")
+          },500)
+        });
     }
   };
 
@@ -128,6 +136,9 @@ const AddProduct = (props) => {
           <button className="create-btn" onClick={(event) => submitForm(event)}>
             ADD PRODUCT
           </button>
+          {actionSuccess && (
+            <div className="success-message">Product added successfully</div>
+          )}
         </div>
       </div>
     </UserLayout>
@@ -145,4 +156,4 @@ const actions = {
   addProduct,
 };
 
-export default connect(mapStateToProps,actions)(AddProduct);
+export default connect(mapStateToProps, actions)(AddProduct);

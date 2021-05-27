@@ -5,6 +5,8 @@ import FormField from "../Form/formfield";
 import { update, generateData, isFormValid } from "../Form/formActions";
 import { connect } from "react-redux";
 import { addMaterial } from "../../store/material";
+import { useHistory } from "react-router-dom"
+
 const materialdata = {
   name: {
     element: "input",
@@ -69,6 +71,8 @@ const materialdata = {
 };
 const AddMaterial = (props) => {
   const [materialData, setMaterialData] = useState(materialdata);
+  const [actionSuccess, setActionSuccess] = useState(false);
+  const history = useHistory()
 
   const updateForm = (element) => {
     const newFormdata = update(element, materialData, "add material");
@@ -85,6 +89,10 @@ const AddMaterial = (props) => {
 
     if (formIsValid) {
       props.addMaterial({...dataToSubmit,userId:props.userId}).then(result=>{
+        setActionSuccess(true);
+        setTimeout(()=>{
+          history.push("/materials")
+        },500)
       })
     }
   };
@@ -131,6 +139,9 @@ const AddMaterial = (props) => {
           <button className="create-btn" onClick={(event) => submitForm(event)}>
             ADD MATERIAL
           </button>
+          {actionSuccess && (
+            <div className="success-message">Product added successfully</div>
+          )}
         </div>
       </div>
     </UserLayout>

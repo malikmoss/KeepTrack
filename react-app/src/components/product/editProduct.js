@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import UserLayout from "../HOC/userLayout";
 import FormField from "../Form/formfield";
 import { update, generateData, isFormValid } from "../Form/formActions";
-import {useParams} from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import "./index.css";
 import {getProduct, editProduct} from "../../store/product";
 import {useDispatch, connect} from "react-redux";
+import { useHistory } from "react-router-dom"
+
 const productdata = {
 
   id: {
@@ -48,9 +50,12 @@ const productdata = {
     showlabel: true,
   },
 };
+
 const EditProduct = (props) => {
   let { id } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
+
   useEffect(() => {
    props.getProduct(id).then((product) => {})
   }, [])
@@ -76,11 +81,12 @@ const EditProduct = (props) => {
 
     let dataToSubmit = generateData(productData, "edit product");
     let formIsValid = isFormValid(productData, "edit product");
-    console.log(formIsValid)
+    // console.log(formIsValid)
     if (formIsValid) {
       props.editProduct({...dataToSubmit,userId:props.userId}).then(result=>{
       })
-      alert("Success!")
+      alert("Success!");
+      history.push("/dashboard")
     }
   };
 

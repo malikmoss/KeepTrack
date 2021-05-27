@@ -47,12 +47,12 @@ class Login extends Component {
 
   demoUser = async (event) => {
     event.preventDefault();
-    const data = this.props.login('demo@aa.io', 'password')
-    if(!data.errors) {
+    const user = await this.props.login('demo@aa.io', 'password')
+    if(!user.errors) {
       this.props.setAuthenticated(true);
       this.props.history.push("/dashboard")
     } else {
-      this.setState({ errors: data.errors })
+      this.setState({ errors: user.errors })
     }
   }
 
