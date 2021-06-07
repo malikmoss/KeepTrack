@@ -22,7 +22,7 @@
 }
 
 .landing-img {
-  position: absolute;
+  position: fixed;
 }
 
 .footer-master {
